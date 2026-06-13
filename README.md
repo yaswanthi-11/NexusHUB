@@ -13,7 +13,7 @@ A static prototype built inside the `AI/` folder to demonstrate a safety-first m
 
 ## How to use
 
-1. Open `AI/index.html` in your browser.
+1. Open `index.html` in your browser.
 2. Enter symptom text and click **Analyze with Guardrails**.
 2. Enter symptom text and click **Analyze Safely**.
 3. Upload a medical report image or PDF summary to preview file handling.
