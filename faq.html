@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Nexus Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/> <!-- Teal background for the icon box -->
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1>
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html"><span class="nav-icon" style="color: var(--primary-teal);">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html"><span class="nav-icon" style="color: var(--emergency-red);">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html"><span class="nav-icon">📚</span><span class="nav-text">Library</span></a>
+                <a href="faq.html" class="active"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+        <main class="content-page">
+            <h2 style="color: var(--text-white); font-weight: 800; letter-spacing: -0.02em;">Frequently Asked Questions</h2>
+            
+            <div class="search-container">
+                <input type="text" id="faq-search" class="search-input" placeholder="Search FAQs..." style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: var(--text-white); border-radius: 12px; padding: 12px 15px; transition: border-color 0.3s; width: 100%;">
+            </div>
+            
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>How does the AI work?</strong>
+                <p>We use Gemini 1.5 Flash to parse medical text and images safely.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>What kind of information can the AI analyze?</strong>
+                <p>The AI can analyze text-based symptom descriptions, medical report images (like lab results), and PDF documents. It extracts key information and provides educational summaries.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Is my data stored?</strong>
+                <p>No, all analysis is performed in-memory and discarded immediately.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>How is my privacy protected?</strong>
+                <p>Your privacy is paramount. Since data is not stored, there's no risk of it being accessed later. All processing happens in real-time and is ephemeral.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Can this replace a doctor?</strong>
+                <p>Absolutely not. This is an educational tool for preliminary support only.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>What happens if I enter emergency symptoms?</strong>
+                <p>Our system has built-in emergency red-flag detection. If potentially urgent symptoms are detected, the AI is bypassed, and you are immediately directed to seek emergency medical care and provided with options to find nearby hospitals.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>What languages does the assistant support?</strong>
+                <p>The assistant primarily operates in English, but it can also detect and provide simulated responses in Hindi and Telugu for basic symptom descriptions.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>How accurate are the AI summaries?</strong>
+                <p>The AI aims to provide accurate educational summaries based on the input. However, it is an AI model and not a human doctor. Its output should always be verified by a medical professional.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Why do some responses say "Backend unavailable" or "Local simulation"?</strong>
+                <p>This indicates that the connection to the AI model server might be temporarily down or your API keys are not correctly configured. In such cases, the system falls back to a safe, pre-programmed educational response.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Can I upload any type of file?</strong>
+                <p>The system is designed to analyze image files (JPG, PNG, etc.) and PDF documents. Other file types are currently not supported for analysis.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>What is the "Symptoms Library"?</strong>
+                <p>The Symptoms Library is a collection of common medical symptoms with brief educational descriptions. You can click on a symptom to learn more and then analyze it on the Dashboard.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>How does the "History" feature work?</strong>
+                <p>The History page stores your recent analysis summaries locally in your browser's storage. This allows you to review past interactions. This data is not sent to our servers.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Can I download my analysis summaries?</strong>
+                <p>Yes, after an analysis is complete, a "Download PDF Summary" button will appear, allowing you to save the educational summary as a PDF document to your device.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>What is the purpose of the "Dark Mode" toggle?</strong>
+                <p>The Dark Mode toggle allows you to switch the website's color scheme for better readability in low-light conditions or personal preference. Your preference is saved locally.</p>
+            </div>
+            <div class="faq-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <strong>Who developed Nexus Hub?</strong>
+                <p>Nexus Hub was developed as part of the AI Model Development Contest 2026, focusing on responsible AI in healthcare.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p style="color: var(--text-gray);">&copy; 2026 Nexus Hub Project</p>
+        </footer>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+</body>
+</html>

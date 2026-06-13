@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History | Nexus Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/> <!-- Teal background for the icon box -->
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1>
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html"><span class="nav-icon" style="color: var(--emergency-red);">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html"><span class="nav-icon">📚</span><span class="nav-text">Library</span></a>
+                <a href="faq.html"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html" class="active"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+        <main class="content-page">
+            <h2 style="color: var(--text-white); font-weight: 800; letter-spacing: -0.02em;">Your Analysis History</h2>
+            <p style="color: var(--text-gray);">Below is a log of your recent educational summaries. This data is stored locally in your browser.</p>
+            
+            <button id="clear-history" class="btn-danger" style="background: var(--emergency-red); color: white; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.3s; box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.2);">Clear All History</button>
+            
+            <div id="history-container">
+                <p style="color: var(--text-gray);">No history found.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Nexus Hub Project</p>
+        </footer>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Ensure script2.js is loaded before this inline script if its functions are used
+        // For now, re-define necessary functions or ensure script2.js is loaded first.
+
+        const historyContainer = document.getElementById('history-container');
+        const clearBtn = document.getElementById('clear-history');
+
+        function downloadHistoryItem(index) {
+            const history = JSON.parse(localStorage.getItem('nexus_hub_history') || '[]');
+            const item = history[index];
+            if (!item) return;
+        
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Logo Header (consistent with index.html)
+            doc.setFillColor(20, 184, 166); // Primary Teal
+            doc.rect(10, 10, 15, 15, 'F');
+            doc.setFont("helvetica", "bold"); // Use a standard font
+            doc.setFontSize(18);
+            doc.setTextColor(44, 62, 80); // Dark color for PDF header text
+            doc.text("Nexus Hub", 30, 21);
+            
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(10);
+            doc.setTextColor(120); // Lighter gray for subtitle
+            doc.text("Educational Health Assistant", 30, 26);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(50); // Dark color for PDF report type
+            doc.text(`Report Type: ${item.type}`, 10, 40);
+            doc.text(`Generated: ${item.timestamp}`, 10, 46);
+            doc.setDrawColor(200);
+            doc.line(10, 52, 200, 52);
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0); // Black for main message content
+            let fullText = item.message;
+            if (item.detail) fullText += `\n\n${item.detail}`;
+            const splitText = doc.splitTextToSize(fullText, 180);
+            doc.text(splitText, 10, 60);
+            
+            doc.setFontSize(9);
+            doc.setTextColor(150); // Gray for disclaimer
+            doc.text("Disclaimer: This summary is for educational purposes only and is not medical advice.", 10, 285);
+            doc.save(`NexusHub_Summary_${item.timestamp.replace(/[/, :]/g, '_')}.pdf`);
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('nexus_hub_history') || '[]');
+            if (history.length === 0) {
+                historyContainer.innerHTML = '<p style="color: var(--text-gray);">No history found. Start an analysis on the Dashboard.</p>';
+                return;
+            }
+
+            historyContainer.innerHTML = history.map((item, index) => `
+                <div class="history-item" style="background: var(--card-glass); border: 1px solid var(--border-glass); border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                    <header>
+                        <span style="color: var(--primary-teal);"><strong>${item.type}</strong></span>
+                        <span style="color: var(--text-gray);">${item.timestamp}</span>
+                    </header>
+                    <div class="history-content">${item.message.replace(/\n/g, '<br>')}</div>
+                    ${item.detail ? `<div class="history-detail" style="margin-top:10px; font-size:0.9rem; opacity:0.8;"><em>${item.detail}</em></div>` : ''}
+                    <button class="btn-download" onclick="downloadHistoryItem(${index})">
+                        <span>📄</span> Download PDF
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        clearBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear your local history?')) {
+                localStorage.removeItem('nexus_hub_history');
+                loadHistory();
+            }
+        });
+
+        // Initial calls on page load
+        // applyTheme() is called by script2.js
+        // checkBackendHealth() is called by script2.js
+        // initSidebarCollapse() is called by script2.js
+        loadHistory();
+    </script>
+</body>
+</html>

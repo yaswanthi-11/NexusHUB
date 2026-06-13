@@ -1,0 +1,32 @@
+Patient Name: A. Kumar
+Patient ID: 012345
+Date of Report: 2026-06-07
+
+Clinical Summary:
+- Reason for visit: Persistent headache and mild chest discomfort
+- Duration: 3 days
+- Additional symptoms: fatigue, occasional dizziness, mild shortness of breath while climbing stairs
+
+Vital Signs:
+- Blood pressure: 128/82 mmHg
+- Heart rate: 76 bpm
+- Temperature: 98.6°F (37.0°C)
+- Respiratory rate: 16 breaths/min
+
+Lab Results:
+- Hemoglobin: 13.8 g/dL (normal 13.0-17.0)
+- White blood cell count: 7.1 x10^3/µL (normal 4.0-11.0)
+- Blood glucose (fasting): 98 mg/dL (normal 70-99)
+- Cholesterol total: 185 mg/dL (desirable <200)
+
+Impression:
+- Probable tension headache with possible mild anxiety components.
+- No evidence of acute cardiac event based on vitals and history.
+
+Recommended Action:
+- Follow up with primary care physician within one week.
+- Maintain hydration and rest.
+- Seek immediate care if chest pain worsens, shortness of breath increases, or symptoms become severe.
+
+Notes:
+- This report is for demonstration/testing only and is not medical advice.

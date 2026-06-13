@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Library | Nexus Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+        .symptom-card {
+            background: var(--card-glass);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .symptom-card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--primary-teal);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), var(--teal-glow);
+        }
+        .symptom-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .symptom-info { padding: 20px; flex-grow: 1; color: var(--text-white); }
+        .symptom-info h3 { margin: 0 0 10px 0; color: var(--text-white); font-weight: 700; }
+        .symptom-info p { margin: 0; color: var(--text-gray); font-size: 0.9rem; line-height: 1.5; }
+        .analyze-btn {
+            margin: 20px;
+            margin-top: 0;
+            background: linear-gradient(135deg, var(--primary-teal), var(--secondary-blue));
+            color: var(--text-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(20, 184, 166, 0.2);
+        }
+        .analyze-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3); 
+            filter: brightness(1.1);
+        }
+        .symptom-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 20px 0 20px;
+        }
+        .symptom-icon-circle {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+        }
+        .spec-tag {
+            font-size: 0.7rem;
+            background: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .content-wrapper {
+            animation: fadeIn 0.8s ease-out forwards; /* Apply fade-in to content wrapper */
+        }
+
+        header h1 {
+            color: var(--text-white);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: var(--text-gray);
+        }
+
+        .search-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-white);
+            border-radius: 12px;
+            padding: 12px 15px;
+            transition: border-color 0.3s;
+        }
+        .search-input::placeholder {
+            color: var(--text-gray);
+            opacity: 0.7;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-teal);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/>
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1>
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html"><span class="nav-icon" style="color: var(--primary-teal);">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html"><span class="nav-icon" style="color: var(--emergency-red);">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html" class="active"><span class="nav-icon">📚</span><span class="nav-text">Library & Specialists</span></a>
+                <a href="faq.html"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+        <main class="content-wrapper content-page" style="padding: 40px;">
+            <header style="margin-bottom: 40px;">
+                <h1>Symptoms & Specialists</h1>
+                <p style="margin-top: 10px;">Browse common symptoms and educational summaries.</p>
+                
+                <div style="margin-top: 20px; max-width: 400px;">
+                    <input type="text" id="lib-search" class="search-input" placeholder="Search symptoms (e.g. cough)...">
+                </div>
+            </header>
+
+            <div class="library-grid" id="library-root">
+                <!-- Rendered via JS -->
+            </div>
+        </main>
+    </div>
+    <script>
+        const symptoms = [
+            { name: 'Cough', desc: 'A productive or dry reflex action to clear airways.', spec: 'General Physician / ENT', icon: '🌬️' },
+            { name: 'Fever', desc: 'Temporary increase in body temperature above 98.6°F.', spec: 'General Physician', icon: '🌡️' },
+            { name: 'Headache', desc: 'Pain originating from the head or upper neck.', spec: 'General Physician / Neurologist', icon: '🧠' },
+            { name: 'Nausea', desc: 'The sensation of having an urge to vomit.', spec: 'General Physician / Gastroenterologist', icon: '🥣' },
+            { name: 'Skin Rash', desc: 'Inflammation or change in appearance of the skin.', spec: 'Dermatologist', icon: '🧴' },
+            { name: 'Abdominal Pain', desc: 'Pain or cramps felt in the abdomen area.', spec: 'Gastroenterologist', icon: '🥣' },
+            { name: 'Fatigue', desc: 'A constant state of weariness or lack of energy.', spec: 'General Physician', icon: '🌡️' },
+            { name: 'Dizziness', desc: 'Feeling faint, woozy, weak or unsteady.', spec: 'General Physician / Neurologist', icon: '🧠' },
+            { name: 'Sore Throat', desc: 'Pain, scratchiness or irritation of the throat.', spec: 'ENT Specialist', icon: '🌬️' },
+            { name: 'Muscle Aches', desc: 'Pain felt in the muscles, often due to strain.', spec: 'General Physician / Physiotherapist', icon: '🦴' },
+            { name: 'Joint Pain', desc: 'Discomfort or pain in any of the body\'s joints.', spec: 'Orthopedist', icon: '🦴' },
+            { name: 'Back Pain', desc: 'Pain felt in the back, often related to posture.', spec: 'Orthopedist / Physiotherapist', icon: '🦴' },
+            { name: 'Chest Pain', desc: 'Discomfort in the chest area. REQUIRES IMMEDIATE ATTENTION.', spec: 'Cardiologist (Urgent)', icon: '🫀' },
+            { name: 'Shortness of Breath', desc: 'Difficulty breathing or catching one\'s breath.', spec: 'Pulmonologist / Cardiologist', icon: '🌬️' },
+            { name: 'Blurred Vision', desc: 'Loss of sharpness of vision.', spec: 'Ophthalmologist', icon: '🧠' },
+            { name: 'Frequent Urination', desc: 'The need to urinate more often than usual.', spec: 'Endocrinologist / Urologist', icon: '💧' },
+            { name: 'Persistent Thirst', desc: 'An unusual and constant need to drink fluids.', spec: 'Endocrinologist', icon: '💧' },
+            { name: 'Loss of Appetite', desc: 'Reduced desire to eat or enjoy food.', spec: 'General Physician', icon: '🥣' },
+            { name: 'Night Sweats', desc: 'Excessive sweating during sleep.', spec: 'General Physician', icon: '🌡️' },
+            { name: 'Chills', desc: 'Feeling of coldness with shivering.', spec: 'General Physician', icon: '🌡️' },
+            { name: 'Heartburn', desc: 'Burning sensation in the chest after eating.', spec: 'Gastroenterologist', icon: '🥣' },
+            { name: 'Bloating', desc: 'A feeling of fullness or swelling in the abdomen.', spec: 'Gastroenterologist', icon: '🥣' },
+            { name: 'Constipation', desc: 'Difficulty in emptying the bowels.', spec: 'Gastroenterologist', icon: '🥣' },
+            { name: 'Diarrhea', desc: 'Frequent, loose or watery bowel movements.', spec: 'Gastroenterologist', icon: '🥣' },
+            { name: 'Insomnia', desc: 'Persistent problems falling and staying asleep.', spec: 'General Physician / Psychiatrist', icon: '🧠' },
+            { name: 'Anxiety', desc: 'Feelings of worry or fear.', spec: 'Psychiatrist / Counselor', icon: '🧠' },
+            { name: 'Palpitations', desc: 'Feelings of a fast-beating heart.', spec: 'Cardiologist', icon: '🫀' },
+            { name: 'Numbness', desc: 'Loss of sensation in a part of the body.', spec: 'Neurologist', icon: '🧠' },
+            { name: 'Earache', desc: 'Pain in the inner or outer ear.', spec: 'ENT Specialist', icon: '👂' },
+            { name: 'Sneezing', desc: 'A sudden, involuntary expulsion of air.', spec: 'ENT / General Physician', icon: '🌬️' },
+            { name: 'Runny Nose', desc: 'Excess nasal drainage.', spec: 'ENT / General Physician', icon: '🌬️' },
+            { name: 'Weight Loss', desc: 'Unintentional reduction in body weight.', spec: 'General Physician / Endocrinologist', icon: '🌡️' },
+            { name: 'Drowsiness', desc: 'Feeling abnormally sleepy during the day.', spec: 'General Physician / Neurologist', icon: '🌡️' }
+        ];
+
+        const root = document.getElementById('library-root');
+        const searchInput = document.getElementById('lib-search');
+
+        function getRandomColor(key) {
+            const colors = ['#14b8a6', '#2563eb', '#f97316', '#ec4899', '#f59e0b', '#22c55e', '#6366f1', '#0ea5e9'];
+            let hash = 0;
+            for (let i = 0; i < key.length; i++) {
+                hash = (hash << 5) - hash + key.charCodeAt(i);
+                hash |= 0;
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        function analyzeSymptom(name) {
+            localStorage.setItem('nexus_hub_pending_symptom', name);
+            window.location.href = 'index.html';
+        }
+
+        function renderLibrary(filter = '') {
+            root.innerHTML = '';
+            const filtered = symptoms.filter(s => 
+                s.name.toLowerCase().includes(filter.toLowerCase()) || 
+                s.desc.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'symptom-card';
+                card.innerHTML = `
+                    <div class="symptom-header">
+                        <div class="symptom-icon-circle">${s.icon || '📋'}</div>
+                        <div style="flex-grow:1">
+                            <h3 style="margin:0">${s.name}</h3>
+                            <span class="spec-tag">Consult: ${s.spec || 'Physician'}</span>
+                        </div>
+                    </div>
+                    <div class="symptom-info">
+                        <p>${s.desc}</p>
+                    </div>
+                    <button class="analyze-btn" onclick="analyzeSymptom('${s.name}')">Analyze This Symptom</button>
+                `;
+                root.appendChild(card);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => renderLibrary(e.target.value));
+
+        renderLibrary(); // Initial render
+    </script>
+    <script src="script2.js"></script>
+</body>
+</html>

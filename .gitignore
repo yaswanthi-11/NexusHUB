@@ -1,0 +1,10 @@
+# Environments
+.env*
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Project Specific
+node_modules/
+healthmate_history.db

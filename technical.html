@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <img src="logo.svg" alt="Health AI Safety Assistant logo" class="page-logo" />
+        <p class="eyebrow">Technical Details</p>
+        <h1>How the Prototype is Built</h1>
+        <p class="subtitle">View the architecture, backend design, safety checks, and how multimodal input is handled.</p>
+        <nav class="page-nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="vision-demo.html">Vision Demo</a>
+          <a href="safety-guidelines.html">Safety</a>
+          <a href="faq.html">FAQ</a>
+          <a href="technical.html">Technical</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="grid-layout">
+      <article class="card">
+        <h2>Backend</h2>
+        <p>The FastAPI backend accepts text and file uploads, performs emergency keyword detection, and optionally calls an AI model when an API key is available.</p>
+      </article>
+
+      <article class="card">
+        <h2>Frontend</h2>
+        <p>The browser UI uses a modern responsive layout with clear guardrails, language detection, file preview, and safe loading states.</p>
+      </article>
+
+      <article class="card output-card">
+        <h2>Safety flow</h2>
+        <p>Text input is checked for red flags before AI engagement. File uploads are acknowledged while preserving the demo's educational disclaimer.</p>
+      </article>
+    </section>
+
+    <section class="callout">
+      <h3>Navigate</h3>
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="vision-demo.html">Vision Demo</a></li>
+        <li><a href="safety-guidelines.html">Safety Guidelines</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

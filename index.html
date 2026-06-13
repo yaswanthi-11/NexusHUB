@@ -1,0 +1,144 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Hub | AI Medical Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/>
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1> <!-- Project Title -->
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html" class="active"><span class="nav-icon">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html"><span class="nav-icon" style="color: var(--emergency-red);">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html"><span class="nav-icon">📚</span><span class="nav-text">Library & Specialists</span></a>
+                <a href="faq.html"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+            <section class="hero-section" style="margin-bottom: 40px; padding: 40px; background: linear-gradient(to right, rgba(20, 184, 166, 0.1), transparent); border-radius: 30px; border: 1px solid var(--border-glass);">
+                <div style="max-width: 600px;">
+                    <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; color: var(--text-white);">Intelligent Care for a <span style="background: linear-gradient(to right, var(--primary-teal), var(--secondary-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Healthy Future</span></h2>
+                    <p style="color: var(--text-gray); font-size: 1.1rem; margin-bottom: 25px;">Nexus Hub AI interprets complex clinical data to provide educational insights and immediate emergency guidance.</p>
+                    <div style="display: flex; gap: 15px;">
+                        <button class="btn-primary" onclick="document.getElementById('user-text').focus()">Start Symptom Analysis</button>
+                        <button class="btn-secondary">View Guidelines</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Metrics Overview -->
+            <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div class="metric-card" style="background: var(--card-glass); padding: 20px; border-radius: 20px; border: 1px solid var(--border-glass); backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between;">
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em;">Safety Guardrails</span>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin-top: 10px;">ACTIVE <span style="color: var(--primary-teal); font-size: 1rem;">●</span></div>
+                </div>
+                <div class="metric-card" style="background: var(--card-glass); padding: 20px; border-radius: 20px; border: 1px solid var(--border-glass); backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between;">
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em;">Analysis Engine</span>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin-top: 10px;">HYBRID v2.1</div>
+                </div>
+                <div class="metric-card" style="background: var(--card-glass); padding: 20px; border-radius: 20px; border: 1px solid var(--border-glass); backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: space-between;">
+                    <span style="font-size: 0.7rem; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.1em;">Data Sovereignty</span>
+                    <div style="font-size: 1.5rem; font-weight: 800; margin-top: 10px;">SECURED</div>
+                </div>
+            </div>
+
+            <main class="dashboard">
+            <section class="input-area dashboard-section">
+                <form id="text-form">
+                    <label for="user-text" class="input-label" style="display:flex; align-items:center; gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .52 6.588A3 3 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 1 0 12.001 5"/><path d="M12 18a3 3 0 1 0 5.997-.125 4 4 0 0 0 2.526-5.77 4 4 0 0 0-.52-6.588A3 3 0 1 0 12 6Z"/><path d="M15 11a4.5 4.5 0 0 0-3 4"/></svg> AI Symptom Checker</label>
+                    <div class="textarea-container">
+                        <textarea id="user-text" placeholder="e.g., I have had a persistent cough for 2 days..."></textarea>
+                        <button type="button" id="mic-button" class="mic-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                        </button>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">Analyze Safely</button>
+                        <button type="button" id="clear-text" class="btn-secondary">Clear</button>
+                    </div>
+                </form>
+
+                <div class="upload-section" style="margin-top: 30px;">
+                    <label class="input-label">Clinical Report Analysis</label>
+                    <input type="file" id="file-input" accept="image/*,application/pdf">
+                    <div id="file-preview" class="file-preview"></div>
+                </div>
+
+
+                <!-- Health Trends Sparkline -->
+                <div class="health-trends" style="margin-top: 30px; padding: 25px; background: var(--card-glass); border-radius: 20px; border: 1px solid var(--border-glass); backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                    <h4 style="font-weight: 800; margin-bottom: 15px; color: var(--text-white); display: flex; align-items: center; gap: 10px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity" style="color: var(--primary-teal);"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Recent Health Trends</h4>
+                    <div class="sparkline-container">
+                    </div>
+                </div>
+            </section>
+
+            <section class="output-area dashboard-section">
+                <h3 class="analysis-insights-title">
+                    <span class="status-dot" style="width: 8px; height: 8px; background: var(--primary-teal); border-radius: 50%; box-shadow: var(--teal-glow);"></span>
+                    Analysis Insights
+                </h3>
+                <div id="result-output" class="result-card">
+                    Responses appear here after analysis.
+                </div>
+
+                <!-- Chatbot Interface Mockup -->
+                <div class="chatbot-ui" style="margin-top: 25px; background: var(--card-glass); border-radius: 20px; border: 1px solid var(--border-glass); padding: 20px; backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);"> <!-- Chatbot container -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;"> <!-- Chatbot header -->
+                        <div style="width: 32px; height: 32px; background: var(--primary-teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: var(--teal-glow);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><path d="M22 7.26V4l-2 2-2-2v3.26"/><path d="M2 7.26V4l2 2 2-2v3.26"/><path d="M12 22a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4Z"/><path d="M15 9h-6"/><path d="M15 12h-6"/></svg></div> <!-- Chatbot icon -->
+                        <span style="font-weight: 700; font-size: 0.9rem; color: var(--text-white);">AI Health Chatbot</span> <!-- Chatbot title -->
+                    </div>
+                    <div id="chatbot-messages" style="background: rgba(255,255,255,0.03); padding: 12px; border-radius: 12px; font-size: 0.85rem; color: var(--text-gray); margin-bottom: 10px; max-height: 150px; overflow-y: auto;"> <!-- Chat messages display -->
+                        Hello! How can I assist you with your health query today?
+                    </div>
+                    <input type="text" id="chatbot-input" placeholder="Type a message..." style="width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--border-glass); padding: 10px 15px; border-radius: 10px; color: var(--text-white); font-size: 0.85rem;"> <!-- Chat input -->
+                </div>
+            </section>
+            </main>
+
+            <aside class="disclaimer-box" style="margin-top: 40px;">
+                <strong>⚠️ MEDICAL DISCLAIMER:</strong> This tool is for educational purposes only. It does not provide medical advice, diagnosis, or treatment. Always seek the advice of a physician or other qualified health provider.
+            </aside>
+            
+        <footer>
+            <div class="privacy-notice">
+                <strong>🔒 Privacy Notice:</strong> Your uploaded data is processed in real-time for analysis and is not stored permanently on our servers.
+            </div>
+            <p>&copy; 2026 Nexus Hub Project - AI Model Development Contest</p>
+        </footer>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script2.js"></script>
+    <script>
+        // All JavaScript logic is now handled by script2.js
+    </script>
+</body>
+</html>

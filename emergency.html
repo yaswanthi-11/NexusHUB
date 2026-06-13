@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Info | Nexus Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Specific styles for emergency.html to override/extend base styles */
+        body {
+            background: linear-gradient(135deg, var(--bg-navy) 0%, #0D1627 100%);
+            color: var(--text-white);
+        }
+
+        .content-wrapper {
+            animation: fadeIn 0.8s ease-out forwards; /* Apply fade-in to content wrapper */
+        }
+
+        .emergency-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: nowrap; /* Keep aligned on large screens */
+            align-items: stretch;
+        }
+
+        .emergency-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px 24px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+            height: 80px; /* Locked height for perfect alignment */
+            flex-basis: 50%;
+            box-sizing: border-box;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .emergency-btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-call {
+            background: linear-gradient(135deg, var(--emergency-red), #991B1B);
+            color: white;
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));
+        }
+
+        .btn-map {
+            background: var(--card-glass);
+            color: var(--text-white);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-call:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4); filter: drop-shadow(0 0 25px rgba(239, 68, 68, 0.6)); }
+        .btn-map:hover { background: rgba(255,255,255,0.08); border-color: var(--primary-teal); box-shadow: 0 10px 25px rgba(0,0,0,0.4), var(--teal-glow); }
+
+        .content-page {
+            background: var(--card-glass) !important;
+            border: 1px solid var(--border-glass) !important;
+            border-radius: 30px !important;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5) !important;
+        }
+
+        .sidebar {
+            background-color: rgba(15, 23, 42, 0.8) !important; /* Match sidebar glassmorphism */
+            backdrop-filter: blur(20px) !important;
+            border-right: 1px solid var(--border-glass) !important;
+        }
+
+        h2, h3 {
+            color: var(--text-white);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        p, li {
+            color: var(--text-gray);
+        }
+
+        hr {
+            border-color: var(--border-glass);
+            margin: 40px 0;
+        }
+
+        footer {
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/>
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1>
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html"><span class="nav-icon" style="color: var(--primary-teal);">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html" class="active"><span class="nav-icon">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html"><span class="nav-icon">📚</span><span class="nav-text">Library</span></a>
+                <a href="faq.html"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+        <main class="content-page">
+            <div class="emergency-actions">
+                <a href="tel:112" class="emergency-btn btn-call">
+                    <span style="font-size: 1.6rem;">📞</span> Call Emergency (112)
+                </a>
+                <button id="view-map-btn" class="emergency-btn btn-map">
+                    <span style="font-size: 1.6rem;">📍</span> View Nearby Hospitals
+                </button>
+            </div>
+            <div id="map-container" style="display: none; margin-bottom: 30px; border-radius: 20px; overflow: hidden; border: 2px solid var(--border-color);">
+                <iframe id="hospital-map" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+
+            <section>
+                <h2 style="color: var(--emergency-red);">When to Seek Emergency Care</h2>
+                <p style="color: var(--text-gray);">If you or someone else is experiencing the following symptoms, call your local emergency number (e.g., 102, 108, or 911) immediately:</p> <!-- Text color updated -->
+                <ul style="list-style-type: disc; margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Chest Pain:</strong> Sudden pressure, squeezing, fullness, or pain in the center of the chest that lasts more than a few minutes, or that goes away and comes back.</li>
+                    <li><strong>Difficulty Breathing:</strong> Severe shortness of breath, gasping for air, or inability to speak in full sentences.</li>
+                    <li><strong>Stroke Signs (FAST):</strong> Facial drooping, Arm weakness, Speech difficulty, Time to call emergency services.</li>
+                    <li><strong>Severe Bleeding:</strong> Uncontrolled bleeding from a wound, especially if it's spurting or soaking through bandages.</li>
+                    <li><strong>Loss of Consciousness:</strong> Fainting, sudden confusion, unresponsiveness, or difficulty waking up.</li>
+                    <li><strong>Severe Allergic Reaction (Anaphylaxis):</strong> Swelling of the face or throat, difficulty breathing, hives, or a sudden drop in blood pressure.</li>
+                    <li><strong>Sudden Severe Pain:</strong> Especially in the head (thunderclap headache), abdomen, or back.</li>
+                    <li><strong>Poisoning or Overdose:</strong> If someone has ingested a toxic substance or taken too much medication.</li>
+                    <li><strong>Major Injuries:</strong> Such as from a car accident, fall from a height, or deep wounds.</li>
+                    <li><strong>Seizures:</strong> Especially if it's the first seizure, lasts longer than 5 minutes, or the person doesn't regain consciousness.</li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <section>
+                <h3>General Advice During an Emergency</h3>
+                <p style="color: var(--text-gray);">While waiting for professional help, remember these general guidelines:</p> <!-- Text color updated -->
+                <ul style="list-style-type: disc; margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Stay Calm:</strong> Your calm demeanor can help the person in distress.</li>
+                    <li><strong>Do Not Move the Person:</strong> Unless they are in immediate danger (e.g., fire, falling debris).</li>
+                    <li><strong>Provide Basic First Aid:</strong> If you are trained and it's safe to do so.</li>
+                    <li><strong>Gather Information:</strong> Be ready to tell emergency services about the person's condition, medical history, and any medications.</li>
+                    <li><strong>Do Not Give Food or Drink:</strong> Unless instructed by emergency personnel.</li>
+                </ul>
+            </section>
+
+            <hr>
+
+            <section>
+                <h3>Helpful Contacts & Resources</h3>
+                <p style="color: var(--text-gray);">Keep these numbers saved in your phone and know your local resources:</p> <!-- Text color updated -->
+                <ul style="list-style-type: disc; margin-left: 20px; line-height: 1.6;">
+                    <li><strong>National Emergency Number:</strong> 112 (Europe), 911 (North America), 108 (India) - *Call immediately for life-threatening situations.*</li>
+                    <li><strong>Ambulance Services:</strong> 102 / 108 (India), 999 (UK), 000 (Australia) - *Know your local number.*</li>
+                    <li><strong>Poison Control Center:</strong> Search online for your country's specific poison control hotline.</li>
+                    <li><strong>Nearest Hospital:</strong> Have the address and phone number of your closest emergency room readily available.</li>
+                    <li><strong>First Aid Training:</strong> Consider taking a certified first aid and CPR course.</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p style="color: var(--text-gray);">&copy; 2026 Nexus Hub Project</p> <!-- Text color updated -->
+        </footer>
+        </div>
+    </div>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        function applyTheme() {
+            const isDark = localStorage.getItem('nexus_hub_theme') === 'dark';
+            document.body.classList.toggle('dark', isDark);
+            themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        }
+        themeToggle.addEventListener('click', () => {
+            const isDark = !document.body.classList.contains('dark');
+            localStorage.setItem('nexus_hub_theme', isDark ? 'dark' : 'light');
+            applyTheme();
+        });
+
+        const BACKEND_URL = window.location.hostname === 'localhost' ? 'http://localhost:8000' : 'http://127.0.0.1:8000';
+        const backendStatus = document.getElementById('backend-status');
+        const statusText = document.getElementById('status-text');
+
+        async function checkBackendHealth() {
+            if (!backendStatus) return;
+            try {
+                const res = await fetch(`${BACKEND_URL}/health`);
+                backendStatus.className = res.ok ? 'status-indicator status-online' : 'status-indicator status-offline';
+                statusText.textContent = res.ok ? 'SECURE CONNECTION' : 'OFFLINE MODE';
+            } catch (e) {
+                backendStatus.className = 'status-indicator status-offline';
+                statusText.textContent = 'OFFLINE MODE';
+            }
+        }
+
+        function initSidebarSearch() {
+            const searchInput = document.querySelector('.sidebar .search-input');
+            const navLinks = document.querySelectorAll('.main-nav a');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    navLinks.forEach(link => {
+                        link.style.display = link.textContent.toLowerCase().includes(term) ? '' : 'none';
+                    });
+                });
+            }
+        }
+
+        // Helper function to update navigation link titles for tooltips
+        function updateNavLinkTitles(isCollapsed) {
+            const navLinks = document.querySelectorAll('.main-nav a');
+            navLinks.forEach(link => {
+                const textSpan = link.querySelector('span:not(.nav-icon)');
+                if (textSpan) {
+                    if (isCollapsed) {
+                        link.title = textSpan.textContent.trim();
+                    } else {
+                        link.removeAttribute('title');
+                    }
+                }
+            });
+        }
+
+        function initSidebarCollapse() {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleBtn = document.getElementById('sidebar-collapse');
+            if (!sidebar || !toggleBtn) return;
+
+            const isCollapsed = localStorage.getItem('nexus_hub_sidebar_collapsed') === 'true';
+            if (isCollapsed) sidebar.classList.add('collapsed');
+
+            updateNavLinkTitles(isCollapsed); // Apply titles based on initial state
+
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+                localStorage.setItem('nexus_hub_sidebar_collapsed', sidebar.classList.contains('collapsed'));
+                updateNavLinkTitles(sidebar.classList.contains('collapsed')); // Update titles after toggle
+            });
+        }
+
+        function initEmergencyMap() {
+            const mapBtn = document.getElementById('view-map-btn');
+            const mapContainer = document.getElementById('map-container');
+            const mapIframe = document.getElementById('hospital-map');
+
+            mapBtn.addEventListener('click', () => {
+                if (!navigator.geolocation) {
+                    alert("Geolocation is not supported by your browser.");
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const { latitude, longitude } = position.coords;
+                    const mapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}+(Hospitals)&z=14&output=embed`;
+                    mapIframe.src = mapUrl;
+                    mapContainer.style.display = 'block';
+                    mapBtn.textContent = "📍 Refresh Map Location";
+                    mapContainer.scrollIntoView({ behavior: 'smooth' });
+                }, () => {
+                    alert("Unable to retrieve location. Showing general area.");
+                    mapIframe.src = "https://maps.google.com/maps?q=hospitals&z=13&output=embed";
+                    mapContainer.style.display = 'block';
+                });
+            });
+        }
+
+        // Function to get initials from a user name
+        function getUserInitials(userName) {
+            if (!userName) return 'G'; // Default to 'G' if no name
+            const names = userName.split(' ');
+            if (names.length === 1) {
+                return names[0].charAt(0).toUpperCase();
+            }
+            return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
+        }
+
+        // Function to update the user avatar initials and name
+        function updateUserAvatar(userName) {
+            const userInitialsSpan = document.getElementById('user-initials');
+            if (userInitialsSpan) {
+                userInitialsSpan.textContent = getUserInitials(userName);
+            }
+            const userNameSpan = document.querySelector('.user-profile .user-name');
+            if (userNameSpan) {
+                userNameSpan.textContent = userName;
+            }
+        }
+
+        // Initial calls on page load
+        applyTheme();
+        checkBackendHealth();
+        initSidebarSearch();
+        initSidebarCollapse();
+        initEmergencyMap();
+        setInterval(checkBackendHealth, 10000);
+        updateUserAvatar('Guest User'); // Set default user name and update avatar
+    </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Nexus Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Specific styles for settings.html to override/extend base styles */
+        body {
+            background: linear-gradient(135deg, var(--bg-navy) 0%, #0D1627 100%);
+            color: var(--text-white);
+        }
+
+        .content-wrapper {
+            animation: fadeIn 0.8s ease-out forwards; /* Apply fade-in to content wrapper */
+        }
+
+        h2, h3 {
+            color: var(--text-white);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        p, li {
+            color: var(--text-gray);
+        }
+
+        .settings-section {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3), var(--teal-glow);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Styling for Lucide icons within headers */
+        .settings-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-teal);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-section h3 svg {
+            color: var(--primary-teal);
+            filter: drop-shadow(0 0 5px rgba(20, 184, 166, 0.5));
+        }
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+        }
+
+        .option-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .option-buttons button {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-white);
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2), var(--blue-glow);
+        }
+
+        .option-buttons button.active {
+            background: linear-gradient(135deg, var(--primary-teal), var(--secondary-blue));
+            border-color: var(--primary-teal);
+            box-shadow: 0 5px 15px rgba(20, 184, 166, 0.3), var(--teal-glow);
+            transform: translateY(-2px);
+        }
+
+        .option-buttons button:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--secondary-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button id="sidebar-collapse" class="collapse-btn" title="Toggle Sidebar">◀</button>
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="var(--primary-teal)" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="5" fill="var(--primary-teal)"/>
+                    <path d="M12 7V17M7 12H17" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <h1>Nexus Hub</h1>
+                <div id="backend-status" class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span id="status-text">OFFLINE</span>
+                </div>
+            </div>
+
+            <nav class="main-nav">
+                <a href="index.html"><span class="nav-icon" style="color: var(--primary-teal);">📊</span><span class="nav-text">Dashboard</span></a>
+                <a href="emergency.html"><span class="nav-icon" style="color: var(--emergency-red);">🚨</span><span class="nav-text">Emergency</span></a>
+                <a href="symptoms-library.html"><span class="nav-icon">📚</span><span class="nav-text">Library</span></a>
+                <a href="faq.html"><span class="nav-icon">❓</span><span class="nav-text">FAQ</span></a>
+                <a href="history.html"><span class="nav-icon">📜</span><span class="nav-text">History</span></a>
+                <a href="about.html"><span class="nav-icon">ℹ️</span><span class="nav-text">About</span></a>
+                <a href="settings.html" class="active"><span class="nav-icon">⚙️</span><span class="nav-text">Settings</span></a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar"><span id="user-initials">G</span></div>
+                <div class="user-info">
+                    <span class="user-name">Guest User</span>
+                    <span class="user-role">Patient Portal</span>
+                </div>
+                <button id="theme-toggle" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color: var(--text-gray);" title="Toggle Theme">🌓</button>
+            </div>
+        </aside>
+
+        <div class="content-wrapper">
+            <main class="content-page">
+                <h2 style="color: var(--text-white); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 40px;">User Settings</h2>
+                
+                <div class="settings-section">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><path d="M4 13a4 4 0 0 0 4 4h.2c.2 0 .3.1.4.2l.5.5c.2.2.4.3.7.3h4.6c.3 0 .5-.1.7-.3l.5-.5c.1-.1.2-.2.4-.2h.2a4 4 0 0 0 4-4V7a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v6Z"/><path d="M7 21v-4a2 2 0 0 1 2-2h10"/></svg> Theme Preferences</h3>
+                    <div class="option-group">
+                        <label>App Theme</label>
+                        <div class="option-buttons">
+                            <button id="theme-light-btn" class="theme-option">Light</button>
+                            <button id="theme-dark-btn" class="theme-option active">Dark</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Language Settings</h3>
+                    <div class="option-group">
+                        <label>Preferred Language for Summaries</label>
+                        <div class="option-buttons">
+                            <button id="lang-en-btn" class="lang-option active">English</button>
+                            <button id="lang-hi-btn" class="lang-option">Hindi</button>
+                            <button id="lang-te-btn" class="lang-option">Telugu</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p style="color: var(--text-gray);">&copy; 2026 Nexus Hub Project</p>
+            </footer>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+    <script>
+        // Settings page specific logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme preference buttons
+            const themeLightBtn = document.getElementById('theme-light-btn');
+            const themeDarkBtn = document.getElementById('theme-dark-btn');
+
+            function updateThemeButtons() {
+                const currentTheme = localStorage.getItem('nexus_hub_theme') || 'dark';
+                themeLightBtn.classList.toggle('active', currentTheme === 'light');
+                themeDarkBtn.classList.toggle('active', currentTheme === 'dark');
+            }
+
+            themeLightBtn.addEventListener('click', () => {
+                localStorage.setItem('nexus_hub_theme', 'light');
+                applyTheme(); // Call global applyTheme from script2.js
+                updateThemeButtons();
+            });
+
+            themeDarkBtn.addEventListener('click', () => {
+                localStorage.setItem('nexus_hub_theme', 'dark');
+                applyTheme(); // Call global applyTheme from script2.js
+                updateThemeButtons();
+            });
+
+            // Language preference buttons
+            const langEnBtn = document.getElementById('lang-en-btn');
+            const langHiBtn = document.getElementById('lang-hi-btn');
+            const langTeBtn = document.getElementById('lang-te-btn');
+
+            function updateLanguageButtons() {
+                const currentLang = localStorage.getItem('nexus_hub_language') || 'English';
+                langEnBtn.classList.toggle('active', currentLang === 'English');
+                langHiBtn.classList.toggle('active', currentLang === 'Hindi');
+                langTeBtn.classList.toggle('active', currentLang === 'Telugu');
+            }
+
+            langEnBtn.addEventListener('click', () => {
+                localStorage.setItem('nexus_hub_language', 'English');
+                updateLanguageButtons();
+            });
+            langHiBtn.addEventListener('click', () => {
+                localStorage.setItem('nexus_hub_language', 'Hindi');
+                updateLanguageButtons();
+            });
+            langTeBtn.addEventListener('click', () => {
+                localStorage.setItem('nexus_hub_language', 'Telugu');
+                updateLanguageButtons();
+            });
+
+            // Initial state setup
+            updateThemeButtons();
+            updateLanguageButtons();
+
+            // Initial calls on page load (from script2.js)
+            applyTheme();
+            checkBackendHealth();
+            initSidebarCollapse();
+            updateUserAvatar('Guest User');
+            setInterval(checkBackendHealth, 10000);
+        });
+    </script>
+</body>
+</html>

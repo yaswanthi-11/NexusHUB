@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI | Futuristic Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-charcoal: #0a0a0a;
+            --accent-red: #EF4444;
+            --crimson: #991B1B;
+            --ruby: #7F1D1D;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --neon-glow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Glows */
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(153, 27, 27, 0.08) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #fff, var(--accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Layout */
+        header {
+            padding: 2rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-box {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-red);
+            border-radius: 6px;
+            box-shadow: var(--neon-glow);
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-button {
+            background: var(--accent-red);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: var(--neon-glow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+        }
+
+        /* Dashboard Element */
+        .dashboard-preview {
+            margin-top: 5rem;
+            width: 80%;
+            height: 400px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 10rem 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-red);
+            transform: translateY(-10px);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            background: var(--ruby);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Stats */
+        .stats {
+            background: var(--bg-charcoal);
+            padding: 5rem 10%;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .stat-item h2 {
+            font-size: 3rem;
+            color: var(--accent-red);
+        }
+
+        .stat-item p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-overlay"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-box"></div>
+            NEXUS AI
+        </div>
+        <nav>
+            <a href="#features">Platform</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#" class="cta-button" style="padding: 0.6rem 1.5rem; margin-left: 2rem;">Launch App</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1><span class="gradient-text">Automate the</span><br>Future of Talent</h1>
+        <p>Deploy futuristic AI agents to streamline your recruitment pipeline. Real-time analytics, neon-speed processing, and ruby-class security.</p>
+        <a href="#" class="cta-button">Get Started for Free</a>
+        
+        <div class="dashboard-preview">
+            <!-- Simulated Dashboard Content -->
+            <div style="padding: 2rem; display: flex; gap: 20px;">
+                <div style="width: 30%; height: 10px; background: var(--ruby); border-radius: 5px;"></div>
+                <div style="width: 50%; height: 10px; background: var(--glass-border); border-radius: 5px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats">
+        <div class="stat-item"><h2>99.9%</h2><p>Accuracy Rate</p></div>
+        <div class="stat-item"><h2>10M+</h2><p>Processed Daily</p></div>
+        <div class="stat-item"><h2>200ms</h2><p>Response Time</p></div>
+    </div>
+
+    <section class="features" id="features">
+        <div class="card">
+            <div class="icon">⚡</div>
+            <h3>Neural Sourcing</h3>
+            <p>Our deep learning clusters scan global databases to find the 1% that fits your high-tech culture.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🛡️</div>
+            <h3>Crimson Security</h3>
+            <p>End-to-end encrypted processing pipelines ensuring data sovereignty at every node.</p>
+        </div>
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Predictive Flow</h3>
+            <p>Visualize the future of your workforce with automated growth projection dashboards.</p>
+        </div>
+    </section>
+
+    <footer style="padding: 5rem 10%; border-top: 1px solid var(--glass-border); text-align: center; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem;">
+        &copy; 2026 NEXUS AI CORE. ALL RIGHTS RESERVED.
+    </footer>
+</body>
+</html>
